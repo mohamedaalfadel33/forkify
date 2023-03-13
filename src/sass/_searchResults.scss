@@ -12,7 +12,9 @@
 .pagination {
   margin-top: auto;
   padding: 0 3.5rem;
-
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
   &::after {
     content: '';
     display: table;
@@ -25,6 +27,12 @@
     }
     &--next {
       float: right;
+    }
+    &--all{
+      position: absolute;
+      float: right;
+      color: $color-primary;
+      right: 1120px;
     }
   }
 }

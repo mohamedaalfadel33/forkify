@@ -14,6 +14,15 @@ class PaginationView extends View {
       handler(goToPage);
     });
   }
+  _all() {
+    const numPages = Math.ceil(
+      this._data.results.length / this._data.resultsPerPage
+    );
+
+    return `<button class="btn--inline pagination__btn--all" >     
+    <span>${numPages} Pages</span>
+  </button>`;
+  }
   _generateMarkupButton(arrow) {
     const curPage = this._data.page;
     const numPages = Math.ceil(
@@ -21,14 +30,15 @@ class PaginationView extends View {
     );
 
     if (arrow == 'nextpage') {
-      return `  <button data-goto=${
+      return ` <button data-goto=${
         curPage + 1
       } class="btn--inline pagination__btn--next">
     <span>Page ${curPage + 1}</span>
     <svg class="search__icon">
       <use href="${icons}#icon-arrow-right"></use>
     </svg>
-  </button>`;
+  </button> ${this._all()}
+  `;
     }
 
     if (arrow == 'prevpage') {
@@ -39,8 +49,10 @@ class PaginationView extends View {
         <use href="${icons}#icon-arrow-left"></use>
       </svg>
       <span>Page ${curPage - 1}</span>
-    </button>`;
+    </button> `;
     }
+
+    if (all == 'all') return ``;
   }
 
   _generateMarkup() {
@@ -48,8 +60,12 @@ class PaginationView extends View {
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
+    const all = `<button class="btn--inline--all ">     
+    <span>${numPages}</span>
+  </button>`;
     const nextpage = 'nextpage';
     const prevpage = 'prevpage';
+
     console.log(numPages);
     //Page 1 and there are other pages
     if (curPage === 1 && numPages > 1) {
@@ -60,12 +76,16 @@ class PaginationView extends View {
     if (curPage === numPages && numPages > 1) {
       return this._generateMarkupButton(prevpage);
     }
+
     //Other page
     if (curPage < numPages) {
       return `${this._generateMarkupButton(
         nextpage
       )}${this._generateMarkupButton(prevpage)}`;
     }
+
+    //all pages
+
     //Page 1 and there are no other pages
     return '';
   }
